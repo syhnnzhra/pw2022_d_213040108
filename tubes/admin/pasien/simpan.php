@@ -1,7 +1,7 @@
 <html>
 <body>
 <?php
-    $koneksi=mysqli_connect("localhost", "root","", "hospital");
+    include '../../koneksi.php';
     $nama_pasien=$_POST['nama_pasien'];
     $alamat=$_POST['alamat'];
     $gender=$_POST['gender'];
