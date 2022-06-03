@@ -6,19 +6,19 @@
     if( isset($_POST["submit"]) ) {
         // cek apakah data berhasil diubah atau tidak
         if( ubahdokter($_POST) > 0 ) {
-            // echo "
-            //     <script>
-            //         alert('data berhasil diubah!');
-            //         document.location.href = 'index.php';
-            //     </script>
-            // ";
+            echo "
+                <script>
+                    alert('data berhasil diubah!');
+                    document.location.href = 'dokter.php';
+                </script>
+            ";
         } else {
-            // echo "
-            //     <script>
-            //         alert('data gagal diubah!');
-            //         document.location.href = 'index.php';
-            //     </script>
-            // ";
+            echo "
+                <script>
+                    alert('data gagal diubah!');
+                    document.location.href = 'dokter.php';
+                </script>
+            ";
         }
     }
 ?>
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <link rel="stylesheet" href="../css/style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -103,7 +103,8 @@
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Edit Data Dokter</center></h3>
                         <form action="" method="post" enctype="multipart/form-data">
-                            <input type="hidden" class="form-control" name="id_dokter" value="<?php echo $dokter['id_dokter'];?>" required>
+                            <input type="hidden" class="form-control" name="id_dokter" value="<?php echo $dokter['id_dokter'];?>">
+                            <input type="hidden" class="form-control" name="oldpic" value="<?php echo $dokter['gambar'];?>">
                         <div class="mb-3 row">
                                 <label for="nama_dokter" class="col-sm-2 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-10">

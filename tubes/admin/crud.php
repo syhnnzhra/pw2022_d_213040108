@@ -100,28 +100,43 @@
         $gender = htmlspecialchars($data["gender"]);
         $no_telp = htmlspecialchars($data["no_telp"]);
         $id_poliklinik = htmlspecialchars($data["id_poliklinik"]);
-        $oldpic = $data["foto"];
-
-        var_dump($oldpic);
+        $oldpic = $data["oldpic"];
 
         // cek apakah user pilih gambar baru atau tidak
-        // if( $_FILES['foto']['error'] === 4 ) {
-        //     $foto = $gambarLama;
-        // } else {
-        //     $foto = upload();
-        // }
+        if( $_FILES['foto']['error'] === 4 ) {
+            $foto = $oldpic;
+        } else {
+            $foto = upload();
+        }
     
-        // $query = "UPDATE pasien SET
-        //     nama_dokter = '$nama_dokter',
-        //     gender = '$gender',
-        //     no_telp = '$no_telp',
-        //     id_poliklinik = '$id_poliklinik',
-        //     foto = '$foto'
-        //     WHERE id_pasien = $id_dokter   
-        // "; 
-        // mysqli_query($conn, $query) or die(mysqli_error($conn));
+        $query = "UPDATE dokter SET
+            nama_dokter = '$nama_dokter',
+            gender = '$gender',
+            no_telp = '$no_telp',
+            id_poliklinik = '$id_poliklinik',
+            foto = '$foto'
+            WHERE id_dokter = $id_dokter   
+        "; 
+        mysqli_query($conn, $query) or die(mysqli_error($conn));
         
-        // return mysqli_affected_rows($conn);
+        return mysqli_affected_rows($conn);
+    }
+
+    function hapusdokter ($id_dokter){
+        $conn = koneksi();
+
+        // ambil data mahasiswa
+        $dokter = query ("SELECT * FROM dokter WHERE id_dokter = $id_dokter")[0];
+
+        // hapus data gambar
+        if($dokter['foto'] !== 'nophoto.jpg' ){
+            unlink('img/' . $dokter["foto"]);
+
+        }
+
+        mysqli_query($conn, "DELETE FROM dokter WHERE id_dokter = $id_dokter") or die(mysqli_error($conn));
+
+        return mysqli_affected_rows($conn);
     }
 
     function tambahpasien($data) {
