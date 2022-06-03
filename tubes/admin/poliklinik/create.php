@@ -1,3 +1,16 @@
+<?php
+require '../crud.php';
+//ketika tombol tambah diklik
+if(isset($_POST["submit"])) {
+    // jalankan fungsi tambah()
+    if(tambahpoliklinik($_POST) > 0) {
+        echo "<script>
+        alert('data berhasil ditambahkan');
+        document.location.href = 'poliklinik.php'
+        </script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +91,7 @@
                 <div class="card col-sm">
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Tambah Data Poliklinik</center></h3>
-                        <form action="simpan.php" method="post">
+                        <form action="" method="post">
                             <div class="mb-3 row">
                                 <label for="nama_poliklinik" class="col-sm-2 col-form-label">Nama Poliklinik</label>
                                 <div class="col-sm-10">

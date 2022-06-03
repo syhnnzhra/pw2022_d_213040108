@@ -1,9 +1,9 @@
 <?php
     require "../crud.php";
-    if(hapuspasien($_GET["id_pasien"]) > 0) {
+    if(hapusrekmed($_GET["id_rekmed"]) > 0) {
         echo "<script>
         alert('data berhasil dihapus');
-        document.location.href = 'pasien.php'
+        document.location.href = 'rekmed.php'
         </script>";
     }
 ?>

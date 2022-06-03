@@ -1,3 +1,12 @@
+<?php
+    require '../crud.php';
+    $dokter = query("SELECT * FROM dokter");
+    //ketika tombol cari diklik
+    if(isset($_POST["cari"])) {
+        // jalankan fungsi cari()
+        $dokter = caridokter($_POST["keyword"]);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,8 +92,10 @@
                                 <a href="create.php" class="btn btn-outline-info btn-sm">Tambah Data</a>
                             </div>
                             <div class="col-sm-6">
-                                <input type="search" name="" id="">
-                                <a href="" class="btn btn-outline-info btn-sm">Search</a>
+                                <form action="" method="post">
+                                    <input type="search" class="" name="keyword" id="" autocomplete="off">
+                                    <button href="" name="cari" class="btn btn-outline-info btn-sm">Search</button>
+                                </form>
                             </div>
                         </div>
                         <table class="table">
@@ -101,26 +112,26 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    include '../../koneksi.php';
                                     $i=1;
-                                    $data=mysqli_query($koneksi, 'SELECT*FROM dokter');
-                                    $b=mysqli_query($koneksi, 'SELECT nama_poliklinik FROM poliklinik where dokter.id_poliklinik=poliklinik.id_poliklinik');
-                                    while ($a=mysqli_fetch_array($data)) {
+                                    // $b=query('SELECT nama_poliklinik FROM poliklinik where dokter.id_poliklinik=poliklinik.id_poliklinik');
+                                    foreach ($dokter as $a) :
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $i++; ?></th>
-                                    <td><?php echo $a ['foto'];?></td>
+                                    <td>
+                                        <img src="img/<?= $a["foto"] ?>" width="100px" height="100px" alt="">
+                                    </td>
                                     <td><?php echo $a ['nama_dokter'];?></td>
                                     <td><?php echo $a ['gender'];?></td>
                                     <td><?php echo $a ['no_telp'];?></td>
-                                    <td><?php echo $a ['id_poliklinik'];?> - <?php echo $b ['nama_poliklinik'];?></td>
+                                    <td><?php echo $a ['id_poliklinik'];?></td>
                                     <td>
-                                        <a href="" class="btn btn-outline-warning btn-sm">Edit</a>
-                                        <a href="delete.php?id_poliklinik=<?php echo$a['id_poliklinik'];?>" class="btn btn-outline-danger btn-sm">Delete</a>
+                                        <a href="edit.php?id_dokter=<?php echo$a['id_dokter'];?>" class="btn btn-outline-warning btn-sm">Edit</a>
+                                        <a href="delete.php?id_dokter=<?php echo$a['id_dokter'];?>" class="btn btn-outline-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                                 <?php
-                                    };
+                                    endforeach;
                                 ?>
                             </tbody>
                         </table>

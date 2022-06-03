@@ -1,11 +1,14 @@
 <?php
 require '../crud.php';
-//ketika tombol tambah diklik
+
+//query mhs berdasarkan id
+$id_rekmed = $_GET["id_rekmed"];
+$rekmed = query("SELECT * FROM rekam_medis WHERE id_rekmed = $id_rekmed")[0]; 
+
 if(isset($_POST["submit"])) {
-    // jalankan fungsi tambah()
-    if(tambahrekmed($_POST) > 0) {
+    if(ubahrekmed($_POST) > 0) {
         echo "<script>
-        alert('data berhasil ditambahkan');
+        alert('data berhasil di ubah');
         document.location.href = 'rekmed.php'
         </script>";
     }
@@ -90,8 +93,14 @@ if(isset($_POST["submit"])) {
             <div class="row">
                 <div class="card col-sm">
                     <div class="card-body">
-                        <h3 class="mt-3 mb-5"> <center>Tambah Data Rekam Medis</center></h3>
+                        <h3 class="mt-3 mb-5"> <center>Edit Data Rekam Medis</center></h3>
                         <form action="" method="post">
+                            <?php 
+                                $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
+                                $id_rekmed=$_GET['id_rekmed'];
+                                $sql=mysqli_query($koneksi,"SELECT*FROM rekam_medis where id_rekmed='$id_rekmed'");
+                                while ($b=mysqli_fetch_array($sql)) {
+                            ?>
                             <div class="mb-3 row">
                                 <label for="formFile" class="col-sm-2 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-10">
@@ -100,7 +109,7 @@ if(isset($_POST["submit"])) {
                                         $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
                                         $sql=mysqli_query($koneksi, 'SELECT*FROM dokter');
                                         while ($data=mysqli_fetch_array($sql)) {
-                                    ?>
+                                            ?>
                                         <option value="<?=$data['id_dokter']?>"><?=$data['nama_dokter']?></option> 
                                     <?php
                                         }
@@ -159,31 +168,35 @@ if(isset($_POST["submit"])) {
                             <div class="mb-3 row">
                                 <label for="riwayat_penyakit" class="col-sm-2 col-form-label">Riwayat Penyakit</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="riwayat_penyakit" name="riwayat_penyakit">
+                                    <input type="text" class="form-control" required id="riwayat_penyakit" name="riwayat_penyakit" value="<?=$b['riwayat_penyakit']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="keluhan" class="col-sm-2 col-form-label">Keluhan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="keluhan" name="keluhan">
+                                    <input type="text" class="form-control" required id="keluhan" name="keluhan" value="<?=$b['keluhan']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="diagnosa" class="col-sm-2 col-form-label">Diagnosa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="diagnosa" name="diagnosa">
+                                    <input type="text" class="form-control" required id="diagnosa" name="diagnosa" value="<?=$b['diagnosa']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="hasil_pemeriksaan" class="col-sm-2 col-form-label">Hasil Pemeriksaan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="hasil_pemeriksaan" name="hasil_pemeriksaan">
+                                    <input type="text" class="form-control" required id="hasil_pemeriksaan" name="hasil_pemeriksaan" value="<?=$b['hasil_pemeriksaan']?>">
                                 </div>
                             </div>
                             <input type="hidden" value="<?php echo date('H:i:s M d, Y'); ?>" class="form-control" required name="tgl_input">
                             <div class="submit">
+                                <input type="hidden" class="form-control" required id="" name="id_rekmed" value="<?=$b['id_rekmed']?>">
                                 <button class="btn btn-outline-info" type="submit" name="submit" value="simpan"> Submit</button>
                             </div>
+                            <?php
+                                }
+                            ?>
                         </form>
                     </div>
                 </div>

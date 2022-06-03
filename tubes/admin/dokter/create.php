@@ -1,3 +1,16 @@
+<?php
+    require '../crud.php';
+    //ketika tombol tambah diklik
+    if(isset($_POST["submit"])) {
+        // jalankan fungsi tambah()
+        if(tambahdokter($_POST) > 0) {
+            echo "<script>
+            alert('data berhasil ditambahkan');
+            document.location.href = 'dokter.php'
+            </script>";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +91,7 @@
                 <div class="card col-sm">
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Tambah Data Dokter</center></h3>
-                        <form action="simpan.php" method="post" enctype="multipart/form-data">
+                        <form action="" method="post" enctype="multipart/form-data">
                         <div class="mb-3 row">
                                 <label for="nama_dokter" class="col-sm-2 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-10">
@@ -114,7 +127,7 @@
                                 <div class="col-sm-10">
                                     <select id="inputState" class="form-select" required name="id_poliklinik">
                                     <?php 
-                                        include '../../koneksi.php';
+                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
                                         $sql=mysqli_query($koneksi, 'SELECT*FROM poliklinik');
                                         while ($data=mysqli_fetch_array($sql)) {
                                     ?>
@@ -127,10 +140,11 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="formFile" class="col-sm-2 col-form-label">Foto</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="file" id="formFile" name="foto" required>
+                                <label for="gambar" class="col-sm-2 col-form-label">Foto</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="file" id="gambar" name="foto" onchange="previewImage()">
                                 </div>
+                                <img src="" class="img-thumbnail col-sm-4 col-form label" height="50px" style="display: none;" id="img-preview">
                             </div>
                             <div class="submit">
                                 <button class="btn btn-outline-info" type="submit" name="submit" value="simpan"> Submit</button>
@@ -154,4 +168,17 @@
             && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault()
         });
         })
+    </script>
+    <script>
+        function previewImage(){
+            const gambar=document.querySelector('#gambar');
+            const imgPreview = document.querySelector('#img-preview');
+            imgPreview.style.display = 'block';
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(gambar.files[0]);
+
+            oFReader.onload = function (oFREvent){
+                imgPreview.src = oFREvent.target.result;
+            };
+        }
     </script>

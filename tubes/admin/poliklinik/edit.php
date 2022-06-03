@@ -1,3 +1,19 @@
+<?php
+require '../crud.php';
+
+//query mhs berdasarkan id
+$id_poliklinik = $_GET["id_poliklinik"];
+$poliklinik = query("SELECT * FROM poliklinik WHERE id_poliklinik = $id_poliklinik")[0]; 
+
+if(isset($_POST["submit"])) {
+    if(ubahpoliklinik($_POST) > 0) {
+        echo "<script>
+        alert('data berhasil di ubah');
+        document.location.href = 'poliklinik.php'
+        </script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,13 +94,14 @@
                 <div class="card col-sm">
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Edit Data Poliklinik</center></h3>
-                        <form action="ubah.php" method="post">
+                        <form action="" method="post">
                             <?php
                                 include '../../koneksi.php';
                                 $id_poliklinik=$_GET['id_poliklinik'];
                                 $data=mysqli_query($koneksi,"SELECT*FROM poliklinik where id_poliklinik='$id_poliklinik'");
                                 while ($a=mysqli_fetch_array($data)) {
                             ?>
+                            <input type="hidden" name="id_poliklinik" value="<?php echo $a['id_poliklinik'];?>">
                             <div class="mb-3 row">
                                 <label for="nama_poliklinik" class="col-sm-2 col-form-label">Nama Poliklinik</label>
                                 <div class="col-sm-10">
@@ -94,7 +111,6 @@
                             <?php
                                 }
                             ?>
-                                <input type="hidden" required class="form-control" id="nama_poliklinik" name="nama_poliklinik" value="<?php echo $a['nama_poliklinik'];?>">
                             <div class="submit">
                                 <button class="btn btn-outline-info" type="submit" name="submit" value="simpan"> Submit</button>
                             </div>

@@ -1,3 +1,13 @@
+<?php 
+    require '../crud.php';
+    $pasien = query("SELECT * FROM pasien");
+    //ketika tombol cari diklik
+    if(isset($_POST["cari"])) {
+        // jalankan fungsi cari()
+        $pasien = caripasien($_POST["keyword"]);
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,8 +87,10 @@
                                 <a href="create.php" class="btn btn-outline-info btn-sm">Tambah Data</a>
                             </div>
                             <div class="col-sm-6">
-                                <input type="search" name="" id="">
-                                <a href="" class="btn btn-outline-info btn-sm">Search</a>
+                                <form action="" method="post">
+                                    <input type="search" class="" name="keyword" id="" autocomplete="off">
+                                    <button href="" name="cari" class="btn btn-outline-info btn-sm">Search</button>
+                                </form>
                             </div>
                         </div>
                         <table class="table">
@@ -94,10 +106,8 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $koneksi=mysqli_connect("localhost", "root","", "hospital");
                                     $i=1;
-                                    $data=mysqli_query($koneksi, 'SELECT*FROM pasien');
-                                    while ($a=mysqli_fetch_array($data)) {
+                                    foreach ($pasien as $a) :
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $i++; ?></th>
@@ -111,7 +121,7 @@
                                     </td>
                                 </tr>
                                 <?php
-                                    };
+                                    endforeach;
                                 ?>
                             </tbody>
                         </table>

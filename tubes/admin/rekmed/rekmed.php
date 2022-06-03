@@ -1,3 +1,12 @@
+<?php
+    require '../crud.php';
+    $rekmed = query("SELECT * FROM rekam_medis");
+    //ketika tombol cari diklik
+    if(isset($_POST["cari"])) {
+        // jalankan fungsi cari()
+        $rekmed = carirekmed($_POST["keyword"]);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,8 +86,10 @@
                                 <a href="create.php" class="btn btn-outline-info btn-sm">Tambah Data</a>
                             </div>
                             <div class="col-sm-6">
-                                <input type="search" name="" id="">
-                                <a href="" class="btn btn-outline-info btn-sm">Search</a>
+                                <form action="" method="post">
+                                    <input type="search" class="" name="keyword" id="" autocomplete="off">
+                                    <button href="" name="cari" class="btn btn-outline-info btn-sm">Search</button>
+                                </form>
                             </div>
                         </div>
                         <table class="table">
@@ -99,10 +110,8 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    include '../../koneksi.php';
                                     $i=1;
-                                    $data=mysqli_query($koneksi, 'SELECT*FROM rekam_medis');
-                                    while ($a=mysqli_fetch_array($data)) {
+                                    foreach ($rekmed as $a) :
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $i++; ?></th>
@@ -116,12 +125,12 @@
                                     <td><?php echo $a ['hasil_pemeriksaan'];?></td>
                                     <td><?php echo $a ['tgl_input'];?></td>
                                     <td>
-                                        <a href="" class="btn btn-outline-warning btn-sm">Edit</a>
-                                        <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
+                                        <a href="edit.php?id_rekmed=<?php echo$a['id_rekmed'];?>" class="btn btn-outline-warning btn-sm">Edit</a>
+                                        <a href="delete.php?id_rekmed=<?php echo$a['id_rekmed'];?>" class="btn btn-outline-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                                 <?php
-                                    };
+                                    endforeach;
                                 ?>
                             </tbody>
                         </table>
