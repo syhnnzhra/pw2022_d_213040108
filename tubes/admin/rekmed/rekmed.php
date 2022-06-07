@@ -1,6 +1,6 @@
 <?php
     require '../crud.php';
-    $rekmed = query("SELECT * FROM rekam_medis");
+    $rekmed = query("SELECT * FROM rekam_medis, dokter, pasien, poliklinik WHERE rekam_medis.id_dokter=dokter.id_dokter AND rekam_medis.id_pasien=pasien.id_pasien AND rekam_medis.id_poliklinik=poliklinik.id_poliklinik");
     //ketika tombol cari diklik
     if(isset($_POST["cari"])) {
         // jalankan fungsi cari()
@@ -95,17 +95,17 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Dokter</th>
-                                <th scope="col">Pasien</th>
-                                <th scope="col">Poliklinik</th>
-                                <th scope="col">Riwayat Penyakit</th>
-                                <th scope="col">Keluhan</th>
-                                <th scope="col">Diagnosa</th>
-                                <th scope="col">Hasil Pemeriksaan</th>
-                                <th scope="col">Tanggal Input</th>
-                                <th scope="col">Aksi</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">No Rekam Medis</th>
+                                    <th scope="col">Dokter</th>
+                                    <th scope="col">Pasien</th>
+                                    <th scope="col">Poliklinik</th>
+                                    <th scope="col">Riwayat Penyakit</th>
+                                    <th scope="col">Keluhan</th>
+                                    <th scope="col">Diagnosa</th>
+                                    <th scope="col">Hasil Pemeriksaan</th>
+                                    <th scope="col">Tanggal Input</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,9 +116,9 @@
                                 <tr>
                                     <th scope="row"><?= $i++; ?></th>
                                     <td><?php echo $a ['id_rekmed'];?></td>
-                                    <td><?php echo $a ['id_dokter'];?></td>
-                                    <td><?php echo $a ['id_pasien'];?></td>
-                                    <td><?php echo $a ['id_poliklinik'];?></td>
+                                    <td><?php echo $a ['nama_dokter'];?></td>
+                                    <td><?php echo $a ['nama_pasien'];?></td>
+                                    <td><?php echo $a ['nama_poliklinik'];?></td>
                                     <td><?php echo $a ['riwayat_penyakit'];?></td>
                                     <td><?php echo $a ['keluhan'];?></td>
                                     <td><?php echo $a ['diagnosa'];?></td>

@@ -1,6 +1,6 @@
 <?php
     require '../crud.php';
-    $dokter = query("SELECT * FROM dokter");
+    $dokter = query("SELECT * FROM dokter, poliklinik where dokter.id_poliklinik=poliklinik.id_poliklinik");
     //ketika tombol cari diklik
     if(isset($_POST["cari"])) {
         // jalankan fungsi cari()
@@ -113,7 +113,6 @@
                             <tbody>
                                 <?php
                                     $i=1;
-                                    // $b=query('SELECT nama_poliklinik FROM poliklinik where dokter.id_poliklinik=poliklinik.id_poliklinik');
                                     foreach ($dokter as $a) :
                                 ?>
                                 <tr>
@@ -124,7 +123,7 @@
                                     <td><?php echo $a ['nama_dokter'];?></td>
                                     <td><?php echo $a ['gender'];?></td>
                                     <td><?php echo $a ['no_telp'];?></td>
-                                    <td><?php echo $a ['id_poliklinik'];?></td>
+                                    <td><?php echo $a ['nama_poliklinik'];?></td>
                                     <td>
                                         <a href="edit.php?id_dokter=<?php echo$a['id_dokter'];?>" class="btn btn-outline-warning btn-sm">Edit</a>
                                         <a href="delete.php?id_dokter=<?php echo$a['id_dokter'];?>" class="btn btn-outline-danger btn-sm">Delete</a>

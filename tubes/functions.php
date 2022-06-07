@@ -41,4 +41,38 @@
 
         return mysqli_affected_rows($conn);
     }
+
+    if(isset($_POST['login'])){
+        $conn = koneksi();
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $cekuser = mysqli_query($conn, "SELECT * FROM user WHERE username='$username' and password='$password'");
+        $hitung = mysqli_num_rows($cekuser);
+
+        // var_dump($hitung);
+
+        if($hitung>0){
+            // kalau data ditemukan
+            $ambildatarole = mysqli_fetch_array($cekuser);
+            $role = $ambildatarole['role'];
+
+            if($role=='admin'){
+                // kalau dia admin
+                $_SESSION['log'] = 'Logged';
+                $_SESSION['role'] = 'Admin';
+                header('location:admin/dashboard.php');
+            } else {
+                // kalau bukan admin
+                $_SESSION['log'] = 'Logged';
+                $_SESSION['role'] = 'User';
+                header('location:user');
+            }
+
+        } else {
+            // kalau tidak ditemukan
+
+            echo 'Data tidak ditemukan';
+        }
+    };
 ?>
