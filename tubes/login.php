@@ -1,9 +1,9 @@
 <?php 
-    // session_start();
+    
     require 'functions.php';
 
     // cek cookie
-    if(isset($_COOKIE['id_user']) && isset($_COOKIE['key']) ) {
+    if(isset($_COOKIE['id_user']) && isset($_COOKIE['key']) ) { session_start();
         $id_user = $_COOKIE['id_user'];
         $key = $_COOKIE['key'];
 

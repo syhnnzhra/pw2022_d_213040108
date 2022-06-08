@@ -1,4 +1,11 @@
 <?php
+    require_once '../../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../../login.php'; </script>";
+        exit;
+    }
     require '../crud.php';
     $dokter = query("SELECT * FROM dokter, poliklinik where dokter.id_poliklinik=poliklinik.id_poliklinik");
     //ketika tombol cari diklik
@@ -79,7 +86,7 @@
                     <small class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin</small>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="../profile.php">Ubah Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        <li><a class="dropdown-item" href="../logout.php">Log Out</a></li>
                     </ul>
                 </div>
             </div>

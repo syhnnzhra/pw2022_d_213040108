@@ -1,7 +1,14 @@
 <?php
+    require_once '../../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../../login.php'; </script>";
+        exit;
+    }
     require '../crud.php';
     $id_dokter = $_GET["id_dokter"];
-    $dokter = query("SELECT * FROM dokter WHERE id_dokter = $id_dokter")[0];
+    $dokter = query("SELECT * FROM dokter, poliklinik WHERE id_dokter = $id_dokter AND dokter.id_poliklinik=poliklinik.id_poliklinik")[0];
     // cek apakah tombol submit sudah ditekan atau belum
     if( isset($_POST["submit"]) ) {
         // cek apakah data berhasil diubah atau tidak
@@ -94,7 +101,7 @@
                     <small class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin</small>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="../profile.php">Ubah Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        <li><a class="dropdown-item" href="../logout.php">Log Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -107,7 +114,7 @@
                         <h3 class="mt-3 mb-5"> <center>Edit Data Dokter</center></h3>
                         <form action="" method="post" enctype="multipart/form-data">
                             <input type="hidden" class="form-control" name="id_dokter" value="<?php echo $dokter['id_dokter'];?>">
-                            <input type="hidden" class="form-control" name="oldpic" value="<?php echo $dokter['gambar'];?>">
+                            <input type="hidden" class="form-control" name="oldpic" value="<?php echo $dokter['foto'];?>">
                         <div class="mb-3 row">
                                 <label for="nama_dokter" class="col-sm-2 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-10">
@@ -142,15 +149,14 @@
                                 <label for="formFile" class="col-sm-2 col-form-label">Poliklinik</label>
                                 <div class="col-sm-10">
                                     <select id="inputState" class="form-select" required name="id_poliklinik">
-                                        <option value="<?=$dokter['id_poliklinik']?>" selected><?=$dokter['id_poliklinik']?></option> 
+                                        <option value="<?=$dokter['id_poliklinik']?>" selected><?=$dokter['nama_poliklinik']?></option> 
                                     <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM poliklinik');
-                                        while ($data=mysqli_fetch_array($sql)) {
+                                        $rekmed = query("SELECT * FROM poliklinik"); 
+                                        foreach ($rekmed as $data) :
                                     ?>
                                         <option value="<?=$data['id_poliklinik']?>"><?=$data['nama_poliklinik']?></option> 
                                     <?php
-                                        }
+                                        endforeach;
                                     ?>
                                     </select>
                                 </div>

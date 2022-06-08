@@ -1,12 +1,12 @@
 <?php
 
-    function koneksi(){
+    function koneksilogin(){
         $conn=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
         return $conn;
     }
 
-    function query($query){
-        $conn = koneksi();
+    function querylogin($query){
+        $conn = koneksilogin();
         $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
         // siapkan data  $mahasiswa
         $rows = [];
@@ -18,7 +18,7 @@
     }
 
     function register($data){
-        $conn = Koneksi();
+        $conn = koneksilogin();
         $username = strtolower(stripslashes($data["username"]));
         $password = mysqli_real_escape_string($conn, $data["password"]);
         $role = mysqli_real_escape_string($conn, $data["role"]);
@@ -43,7 +43,7 @@
     }
 
     if(isset($_POST['login'])){
-        $conn = koneksi();
+        $conn = koneksilogin();
         $username = $_POST['username'];
         $password = $_POST['password'];
 

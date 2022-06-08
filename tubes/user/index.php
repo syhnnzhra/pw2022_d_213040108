@@ -1,11 +1,11 @@
 <?php 
-    // session_start();
-    // require '../functions.php';
-
-    // if( !isset($_SESSION["login"]) ) {
-    //     header("Location: ../login.php");
-    //     exit;
-    // }
+    require_once '../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../login.php'; </script>";
+        exit;
+    }
 
     require 'functions.php';
     if(isset($_POST["janji"])) {
@@ -86,8 +86,7 @@
                 <div id="container">
                     <div class="row">
                         <?php
-                            $conn=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                            $dokter = mysqli_query($conn,"SELECT * FROM dokter, poliklinik WHERE dokter.id_poliklinik=poliklinik.id_poliklinik");
+                            $dokter = query("SELECT * FROM dokter, poliklinik WHERE dokter.id_poliklinik=poliklinik.id_poliklinik");
                             foreach ($dokter as $a) :
                         ?>
                         <div class="col-sm-3 mb-3">

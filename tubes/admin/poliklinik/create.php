@@ -1,15 +1,22 @@
 <?php
-require '../crud.php';
-//ketika tombol tambah diklik
-if(isset($_POST["submit"])) {
-    // jalankan fungsi tambah()
-    if(tambahpoliklinik($_POST) > 0) {
-        echo "<script>
-        alert('data berhasil ditambahkan');
-        document.location.href = 'poliklinik.php'
-        </script>";
+    require_once '../../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../../login.php'; </script>";
+        exit;
     }
-}
+    require '../crud.php';
+    //ketika tombol tambah diklik
+    if(isset($_POST["submit"])) {
+        // jalankan fungsi tambah()
+        if(tambahpoliklinik($_POST) > 0) {
+            echo "<script>
+            alert('data berhasil ditambahkan');
+            document.location.href = 'poliklinik.php'
+            </script>";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +90,7 @@ if(isset($_POST["submit"])) {
                     <small class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin</small>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="../profile.php">Ubah Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        <li><a class="dropdown-item" href="../logout.php">Log Out</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,4 +1,11 @@
 <?php
+    require_once '../../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../../login.php'; </script>";
+        exit;
+    }
     require '../crud.php';
     //ketika tombol tambah diklik
     if(isset($_POST["submit"])) {
@@ -83,7 +90,7 @@
                     <small class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin</small>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="../profile.php">Ubah Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        <li><a class="dropdown-item" href="../logout.php">Log Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -130,13 +137,12 @@
                                 <div class="col-sm-10">
                                     <select id="inputState" class="form-select" required name="id_poliklinik">
                                     <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM poliklinik');
-                                        while ($data=mysqli_fetch_array($sql)) {
+                                        $poliklinik = query("SELECT * FROM poliklinik");
+                                        foreach ($poliklinik as $data) :
                                     ?>
                                         <option value="<?=$data['id_poliklinik']?>"><?=$data['nama_poliklinik']?></option> 
                                     <?php
-                                        }
+                                        endforeach;
                                     ?>
                                     </select>
                                 </div>

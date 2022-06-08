@@ -1,3 +1,12 @@
+<?php
+    require_once '../functions.php';
+    if (!isset($_SESSION["role"])) { session_start();
+        echo " <script>
+            alert('Anda tidak mempunyai akses');
+            document.location.href='../login.php'; </script>";
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
