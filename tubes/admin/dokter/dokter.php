@@ -55,6 +55,9 @@
                     <a href="../rekmed/rekmed.php"><span class="las la-notes-medical"></span><span>Rekam Medis</span></a>
                 </li>
                 <li>
+                    <a href="../appointment/app.php"><span class="las la-notes-medical"></span><span>Appointment</span></a>
+                </li>
+                <li>
                     <a href="../profile.php"><span class="las la-user"></span><span>Ubah Profile</span></a>
                 </li>
             </ul>
@@ -90,6 +93,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <a href="create.php" class="btn btn-outline-info btn-sm">Tambah Data</a>
+                                <a href="report.php" class="btn btn-outline-success btn-sm">Cetak PDF</a>
                             </div>
                             <div class="col-sm-6">
                                 <form action="" method="post">

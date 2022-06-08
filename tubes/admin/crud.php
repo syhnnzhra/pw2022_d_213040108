@@ -248,14 +248,14 @@
         $id_dokter = htmlspecialchars($data["id_dokter"]);
         $id_pasien = htmlspecialchars($data["id_pasien"]);
         $id_poliklinik = htmlspecialchars($data["id_poliklinik"]);
-        $id_jadwal = htmlspecialchars($data["id_jadwal"]);
+        // $id_jadwal = htmlspecialchars($data["id_jadwal"]);
         $riwayat_penyakit = htmlspecialchars($data["riwayat_penyakit"]);
         $keluhan = htmlspecialchars($data["keluhan"]);
         $diagnosa = htmlspecialchars($data["diagnosa"]);
         $hasil_pemeriksaan = htmlspecialchars($data["hasil_pemeriksaan"]);
         $tgl_input = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO rekam_medis SET id_dokter='$id_dokter',id_pasien='$id_pasien',id_poliklinik='$id_poliklinik',id_jadwal='$id_jadwal',riwayat_penyakit='$riwayat_penyakit', keluhan='$keluhan', diagnosa='$diagnosa', hasil_pemeriksaan='$hasil_pemeriksaan', tgl_input='$tgl_input'";
+        $query = "INSERT INTO rekam_medis SET id_dokter='$id_dokter',id_pasien='$id_pasien',id_poliklinik='$id_poliklinik',riwayat_penyakit='$riwayat_penyakit', keluhan='$keluhan', diagnosa='$diagnosa', hasil_pemeriksaan='$hasil_pemeriksaan', tgl_input='$tgl_input'";
 
         mysqli_query($conn, $query) or die(mysqli_error($conn));
         
@@ -269,7 +269,6 @@
         $id_dokter = htmlspecialchars($data["id_dokter"]);
         $id_pasien = htmlspecialchars($data["id_pasien"]);
         $id_poliklinik = htmlspecialchars($data["id_poliklinik"]);
-        $id_jadwal = htmlspecialchars($data["id_jadwal"]);
         $riwayat_penyakit = htmlspecialchars($data["riwayat_penyakit"]);
         $keluhan = htmlspecialchars($data["keluhan"]);
         $diagnosa = htmlspecialchars($data["diagnosa"]);
@@ -280,7 +279,6 @@
             id_dokter = '$id_dokter',
             id_pasien = '$id_pasien',
             id_poliklinik = '$id_poliklinik',
-            id_jadwal = '$id_jadwal',
             riwayat_penyakit = '$riwayat_penyakit',
             keluhan = '$keluhan',
             diagnosa = '$diagnosa',
@@ -314,4 +312,36 @@
                         tgl_input LIKE '%$keyword%'
                 ";
         return query($query);
+    }
+
+    function cariapp($keyword) {
+        $query = "SELECT * FROM appointment
+                    WHERE
+                        id_app LIKE '%$keyword%' OR
+                        nama LIKE '%$keyword%' OR
+                        no_telp LIKE '%$keyword%' OR
+                        keluhan LIKE '%$keyword%' OR
+                        status LIKE '%$keyword%' 
+                ";
+        return query($query);
+    }
+
+    function ubahapp($data) {
+        $conn = koneksi();
+        $id_app = $data["id_app"];
+        $nama = htmlspecialchars($data["nama"]);
+        $no_telp = htmlspecialchars($data["no_telp"]);
+        $keluhan = htmlspecialchars($data["keluhan"]);
+        $status = htmlspecialchars($data["status"]);
+    
+        $query = "UPDATE appointment SET
+            nama = '$nama',
+            no_telp = '$no_telp',
+            keluhan = '$keluhan',
+            status = '$status'
+            WHERE id_app = $id_app   
+        "; 
+        mysqli_query($conn, $query) or die(mysqli_error($conn));
+        
+        return mysqli_affected_rows($conn);
     }

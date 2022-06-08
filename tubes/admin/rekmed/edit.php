@@ -3,7 +3,7 @@ require '../crud.php';
 
 //query mhs berdasarkan id
 $id_rekmed = $_GET["id_rekmed"];
-$rekmed = query("SELECT * FROM rekam_medis WHERE id_rekmed = $id_rekmed")[0]; 
+$rekmed = query("SELECT * FROM rekam_medis, dokter, pasien, poliklinik WHERE id_rekmed = $id_rekmed AND rekam_medis.id_dokter=dokter.id_dokter AND rekam_medis.id_pasien=pasien.id_pasien AND rekam_medis.id_poliklinik=poliklinik.id_poliklinik")[0]; 
 
 if(isset($_POST["submit"])) {
     if(ubahrekmed($_POST) > 0) {
@@ -62,6 +62,9 @@ if(isset($_POST["submit"])) {
                     <a href="rekmed.php"  class="active"><span class="las la-notes-medical"></span><span>Rekam Medis</span></a>
                 </li>
                 <li>
+                    <a href="../appointment/app.php"><span class="las la-notes-medical"></span><span>Appointment</span></a>
+                </li>
+                <li>
                     <a href="../profile.php"><span class="las la-user"></span><span>Ubah Profile</span></a>
                 </li>
             </ul>
@@ -95,108 +98,56 @@ if(isset($_POST["submit"])) {
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Edit Data Rekam Medis</center></h3>
                         <form action="" method="post">
-                            <?php 
-                                $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                $id_rekmed=$_GET['id_rekmed'];
-                                $sql=mysqli_query($koneksi,"SELECT*FROM rekam_medis where id_rekmed='$id_rekmed'");
-                                while ($b=mysqli_fetch_array($sql)) {
-                            ?>
                             <div class="mb-3 row">
                                 <label for="formFile" class="col-sm-2 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-10">
-                                    <select id="inputState" class="form-select" required name="id_dokter">
-                                    <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM dokter');
-                                        while ($data=mysqli_fetch_array($sql)) {
-                                            ?>
-                                        <option value="<?=$data['id_dokter']?>"><?=$data['nama_dokter']?></option> 
-                                    <?php
-                                        }
-                                    ?>
-                                    </select>
+                                    <input type="text" class="form-control" value="<?=$rekmed['nama_dokter']?>" readonly>
+                                    <input type="hidden" class="form-control" name="id_dokter" value="<?=$rekmed['id_dokter']?>" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="formFile" class="col-sm-2 col-form-label">Nama Pasien</label>
                                 <div class="col-sm-10">
-                                    <select id="inputState" class="form-select" required name="id_pasien">
-                                    <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM pasien');
-                                        while ($data=mysqli_fetch_array($sql)) {
-                                    ?>
-                                        <option value="<?=$data['id_pasien']?>"><?=$data['nama_pasien']?></option> 
-                                    <?php
-                                        }
-                                    ?>
-                                    </select>
+                                    <input type="text" class="form-control" value="<?=$rekmed['nama_pasien']?>" readonly>
+                                    <input type="hidden" class="form-control" name="id_pasien" value="<?=$rekmed['id_pasien']?>" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="formFile" class="col-sm-2 col-form-label">Poliklinik</label>
                                 <div class="col-sm-10">
-                                    <select id="inputState" class="form-select" required name="id_poliklinik">
-                                    <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM poliklinik');
-                                        while ($data=mysqli_fetch_array($sql)) {
-                                    ?>
-                                        <option value="<?=$data['id_poliklinik']?>"><?=$data['nama_poliklinik']?></option> 
-                                    <?php
-                                        }
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="formFile" class="col-sm-2 col-form-label">Jadwal</label>
-                                <div class="col-sm-10">
-                                    <select id="inputState" class="form-select" required name="id_jadwal">
-                                    <?php 
-                                        $koneksi=mysqli_connect("localhost", "root","", "hospital") or die('Koneksi gagal!');
-                                        $sql=mysqli_query($koneksi, 'SELECT*FROM jadwal');
-                                        while ($data=mysqli_fetch_array($sql)) {
-                                    ?>
-                                        <option value="<?=$data['id_jadwal']?>"><?=$data['hari']?></option> 
-                                    <?php
-                                        }
-                                    ?>
-                                    </select>
+                                    <input type="text" class="form-control" value="<?=$rekmed['nama_poliklinik']?>" readonly>
+                                    <input type="hidden" class="form-control" name="id_poliklinik" value="<?=$rekmed['id_poliklinik']?>" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="riwayat_penyakit" class="col-sm-2 col-form-label">Riwayat Penyakit</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="riwayat_penyakit" name="riwayat_penyakit" value="<?=$b['riwayat_penyakit']?>">
+                                    <input type="text" class="form-control" required id="riwayat_penyakit" name="riwayat_penyakit" value="<?=$rekmed['riwayat_penyakit']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="keluhan" class="col-sm-2 col-form-label">Keluhan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="keluhan" name="keluhan" value="<?=$b['keluhan']?>">
+                                    <input type="text" class="form-control" required id="keluhan" name="keluhan" value="<?=$rekmed['keluhan']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="diagnosa" class="col-sm-2 col-form-label">Diagnosa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="diagnosa" name="diagnosa" value="<?=$b['diagnosa']?>">
+                                    <input type="text" class="form-control" required id="diagnosa" name="diagnosa" value="<?=$rekmed['diagnosa']?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="hasil_pemeriksaan" class="col-sm-2 col-form-label">Hasil Pemeriksaan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" required id="hasil_pemeriksaan" name="hasil_pemeriksaan" value="<?=$b['hasil_pemeriksaan']?>">
+                                    <input type="text" class="form-control" required id="hasil_pemeriksaan" name="hasil_pemeriksaan" value="<?=$rekmed['hasil_pemeriksaan']?>">
                                 </div>
                             </div>
                             <input type="hidden" value="<?php echo date('H:i:s M d, Y'); ?>" class="form-control" required name="tgl_input">
                             <div class="submit">
-                                <input type="hidden" class="form-control" required id="" name="id_rekmed" value="<?=$b['id_rekmed']?>">
+                                <input type="hidden" class="form-control" required id="" name="id_rekmed" value="<?=$rekmed['id_rekmed']?>">
                                 <button class="btn btn-outline-info" type="submit" name="submit" value="simpan"> Submit</button>
                             </div>
-                            <?php
-                                }
-                            ?>
                         </form>
                     </div>
                 </div>

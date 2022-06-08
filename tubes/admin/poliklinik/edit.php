@@ -62,6 +62,9 @@ if(isset($_POST["submit"])) {
                     <a href="../rekmed/rekmed.php"><span class="las la-notes-medical"></span><span>Rekam Medis</span></a>
                 </li>
                 <li>
+                    <a href="../appointment/app.php"><span class="las la-notes-medical"></span><span>Appointment</span></a>
+                </li>
+                <li>
                     <a href="../profile.php"><span class="las la-user"></span><span>Ubah Profile</span></a>
                 </li>
             </ul>
@@ -95,22 +98,13 @@ if(isset($_POST["submit"])) {
                     <div class="card-body">
                         <h3 class="mt-3 mb-5"> <center>Edit Data Poliklinik</center></h3>
                         <form action="" method="post">
-                            <?php
-                                include '../../koneksi.php';
-                                $id_poliklinik=$_GET['id_poliklinik'];
-                                $data=mysqli_query($koneksi,"SELECT*FROM poliklinik where id_poliklinik='$id_poliklinik'");
-                                while ($a=mysqli_fetch_array($data)) {
-                            ?>
-                            <input type="hidden" name="id_poliklinik" value="<?php echo $a['id_poliklinik'];?>">
+                            <input type="hidden" name="id_poliklinik" value="<?php echo $poliklinik['id_poliklinik'];?>">
                             <div class="mb-3 row">
                                 <label for="nama_poliklinik" class="col-sm-2 col-form-label">Nama Poliklinik</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required class="form-control" id="nama_poliklinik" name="nama_poliklinik" value="<?php echo $a['nama_poliklinik'];?>">
+                                    <input type="text" required class="form-control" id="nama_poliklinik" name="nama_poliklinik" value="<?php echo $poliklinik['nama_poliklinik'];?>">
                                 </div>
                             </div>
-                            <?php
-                                }
-                            ?>
                             <div class="submit">
                                 <button class="btn btn-outline-info" type="submit" name="submit" value="simpan"> Submit</button>
                             </div>

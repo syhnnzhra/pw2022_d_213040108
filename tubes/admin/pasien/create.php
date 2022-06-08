@@ -59,6 +59,9 @@ if(isset($_POST["submit"])) {
                     <a href="../rekmed/rekmed.php"><span class="las la-notes-medical"></span><span>Rekam Medis</span></a>
                 </li>
                 <li>
+                    <a href="../appointment/app.php"><span class="las la-notes-medical"></span><span>Appointment</span></a>
+                </li>
+                <li>
                     <a href="../profile.php"><span class="las la-user"></span><span>Ubah Profile</span></a>
                 </li>
             </ul>

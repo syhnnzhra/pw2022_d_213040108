@@ -1,18 +1,18 @@
 <?php
-require '../crud.php';
+    require '../crud.php';
 
-//query mhs berdasarkan id
-$id_pasien = $_GET["id_pasien"];
-$pasien = query("SELECT * FROM pasien WHERE id_pasien = $id_pasien")[0]; 
+    //query mhs berdasarkan id
+    $id_pasien = $_GET["id_pasien"];
+    $pasien = query("SELECT * FROM pasien WHERE id_pasien = $id_pasien")[0]; 
 
-if(isset($_POST["submit"])) {
-    if(ubahpasien($_POST) > 0) {
-        echo "<script>
-        alert('data berhasil di ubah');
-        document.location.href = 'pasien.php'
-        </script>";
+    if(isset($_POST["submit"])) {
+        if(ubahpasien($_POST) > 0) {
+            echo "<script>
+            alert('data berhasil di ubah');
+            document.location.href = 'pasien.php'
+            </script>";
+        }
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,6 +60,9 @@ if(isset($_POST["submit"])) {
                 </li>
                 <li>
                     <a href="../rekmed/rekmed.php"><span class="las la-notes-medical"></span><span>Rekam Medis</span></a>
+                </li>
+                <li>
+                    <a href="../appointment/app.php"><span class="las la-notes-medical"></span><span>Appointment</span></a>
                 </li>
                 <li>
                     <a href="../profile.php"><span class="las la-user"></span><span>Ubah Profile</span></a>
