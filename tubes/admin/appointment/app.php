@@ -92,12 +92,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="filter">
-
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <form action="" method="post">
-                                    <input type="search" class="" name="keyword" id="" autocomplete="off">
+                                    <input type="text" class="" name="keyword" id="" autocomplete="off">
                                     <button href="" name="cari" class="btn btn-outline-info btn-sm">Search</button>
                                 </form>
                             </div>
