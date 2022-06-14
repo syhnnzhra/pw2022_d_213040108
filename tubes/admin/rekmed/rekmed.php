@@ -97,10 +97,10 @@
                                 <a href="report.php" class="btn btn-outline-success btn-sm">Cetak PDF</a>
                             </div>
                             <div class="col-sm-6">
-                                <form action="" method="post">
+                                <!-- <form action="" method="post">
                                     <input type="search" class="" name="keyword" id="" autocomplete="off">
                                     <button href="" name="cari" class="btn btn-outline-info btn-sm">Search</button>
-                                </form>
+                                </form> -->
                             </div>
                         </div>
                         <table class="table">

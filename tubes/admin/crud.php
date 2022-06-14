@@ -304,7 +304,7 @@
                         id_rekmed LIKE '%$keyword%' OR
                         id_dokter LIKE '%$keyword%' OR
                         id_poliklinik LIKE '%$keyword%' OR
-                        id_jadwal LIKE '%$keyword%' OR
+                        -- id_jadwal LIKE '%$keyword%' OR
                         riwayat_penyakit LIKE '%$keyword%' OR
                         keluhan LIKE '%$keyword%' OR
                         diagnosa LIKE '%$keyword%' OR

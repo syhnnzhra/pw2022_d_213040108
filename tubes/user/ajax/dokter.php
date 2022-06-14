@@ -3,7 +3,7 @@
 
     $keyword = $_GET["keyword"];
 
-    $query = "SELECT * FROM dokter, poliklinik WHERE nama_dokter LIKE '%$keyword%' OR nama_poliklinik LIKE '%$keyword%' AND dokter.id_poliklinik=poliklinik.id_poliklinik";
+    $query = "SELECT * FROM dokter, poliklinik WHERE nama_dokter LIKE '%$keyword%' AND dokter.id_poliklinik=poliklinik.id_poliklinik";
     $dokter = query($query);
     // var_dump($a);
 ?>
